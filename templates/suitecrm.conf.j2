@@ -1,0 +1,41 @@
+ server {
+     listen 80;
+     server_name {{ app_name }}.{{ domain }};
+
+     client_max_body_size 50M;
+
+     index index.php index.html index.htm;
+     root /opt/{{ app_name }};
+
+     location / {
+         root /opt/{{ app_name }};
+         index index.php index.html index.htm;
+     }
+
+     error_page 500 502 503 504 /50x.html;
+     error_log /var/log/nginx/{{ app_name }}.irsyadf.me.error.log;
+
+     location = /50x.html {
+         root /usr/share/nginx/html;
+     }
+
+     ## Images and static content is treated different
+     location ~* ^.+\.(jpg|jpeg|gif|css|png|js|ico|xml|svg|wgoff2)$ {
+         access_log off;
+         expires max;
+         root /opt/{{ app_name }};
+     }
+
+     location ~ \.php$ {
+         try_files $uri =404;
+         fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+         fastcgi_index index.php;
+         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+         include fastcgi_params;
+     }
+
+     location ~ /\.ht {
+         deny all;
+     }
+
+ }

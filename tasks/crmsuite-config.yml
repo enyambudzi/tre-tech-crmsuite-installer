@@ -1,0 +1,26 @@
+---
+
+- name: Set crm db user ssm fact
+  set_fact:
+    suitecrm_dbuser: "{{ lookup('aws_ssm', '{{ db_user_parameter }}', decrypt=True, region='{{ region }}') }}"
+
+- name: Set crm db password ssm fact
+  set_fact:
+    suitecrm_dbpassword: "{{ lookup('aws_ssm', '{{ db_pass_parameter }}', decrypt=True, region='{{ region }}') }}"
+
+- name: Set crm unique key ssm fact
+  set_fact:
+    suitecrm_unique_key: "{{ lookup('aws_ssm', '{{ environment_name }}-{{ app_name }}-unique-key', decrypt=True, region='{{ region }}') }}"
+
+- name: Set crm oauth encryption key ssm fact
+  set_fact:
+    oauth_key: "{{ lookup('aws_ssm', '{{ environment_name }}-{{ app_name }}-oauth-encryption-key', decrypt=True, region='{{ region }}') }}"
+
+- name: Create override config file
+  template:
+    src: "{{ role_path }}/templates/config.php.j2"
+    dest: "/opt/suitecrm/config.php"
+    owner: "nginx"
+    mode: "0755"
+    group: "nginx"
+    force: yes

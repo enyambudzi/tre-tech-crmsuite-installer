@@ -1,0 +1,10 @@
+---
+
+- name: Setup Suite CRM Config
+  include: crmsuite-config.yml
+
+- name: Setup Nginx
+  include: nginx-setup.yml
+
+- name: Restart Services
+  include: restart-services.yml
