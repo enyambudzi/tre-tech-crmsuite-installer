@@ -2,19 +2,19 @@
 
 - name: Set crm db user ssm fact
   set_fact:
-    suitecrm_dbuser: "{{ lookup('aws_ssm', '{{ db_user_parameter }}', decrypt=True, region='{{ region }}') }}"
+    suitecrm_dbuser: "{{ lookup('aws_ssm', '{{ db_user_parameter }}', decrypt=True, region='eu-west-2') }}"
 
 - name: Set crm db password ssm fact
   set_fact:
-    suitecrm_dbpassword: "{{ lookup('aws_ssm', '{{ db_pass_parameter }}', decrypt=True, region='{{ region }}') }}"
+    suitecrm_dbpassword: "{{ lookup('aws_ssm', '{{ db_pass_parameter }}', decrypt=True, region='eu-west-2') }}"
 
 - name: Set crm unique key ssm fact
   set_fact:
-    suitecrm_unique_key: "{{ lookup('aws_ssm', '{{ environment_name }}-{{ app_name }}-unique-key', decrypt=True, region='{{ region }}') }}"
+    suitecrm_unique_key: "{{ lookup('aws_ssm', '{{ environment_name }}-{{ app_name }}-unique-key', decrypt=True, region='eu-west-2') }}"
 
 - name: Set crm oauth encryption key ssm fact
   set_fact:
-    oauth_key: "{{ lookup('aws_ssm', '{{ environment_name }}-{{ app_name }}-oauth-encryption-key', decrypt=True, region='{{ region }}') }}"
+    oauth_key: "{{ lookup('aws_ssm', '{{ environment_name }}-{{ app_name }}-oauth-encryption-key', decrypt=True, region='eu-west-2') }}"
 
 - name: Create override config file
   template:
