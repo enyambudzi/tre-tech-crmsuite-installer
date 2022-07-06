@@ -6,5 +6,8 @@
 - name: Setup Nginx
   include: nginx-setup.yml
 
+- name: Setup SSM Agent
+  include: ssmagent-setup.yml
+
 - name: Restart Services
   include: restart-services.yml
